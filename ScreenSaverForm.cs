@@ -27,10 +27,8 @@ namespace ProgressBarSrc
         private int minProgressBarHeight = 10;
         private int maxMoveSpeed = 5;
         private int minMoveSpeed = 1;
-        private int maxProgressValue = 100;
-        private int minProgressValue = 0;
         private int ProgressBarCount = 20;
-        private int maxProgressIncrement = 1;
+        private int maxProgressIncrement = 10;
         private int minProgressIncrement = 0;
 
         private Random random = new Random();
@@ -49,52 +47,13 @@ namespace ProgressBarSrc
             BackColor = Color.Black;
         }
 
-        class FilesINI
-        {
-            string path;
-            public FilesINI(string path)
-            { this.path = path; }
-            [DllImport("kernel32")]
-            private static extern long WritePrivateProfileString(string section, string key,
-                string val, string filePath);
-
-            [DllImport("kernel32")]
-            private static extern int GetPrivateProfileString(string section, string key, string def,
-                StringBuilder retVal, int size, string filePath);
-
-            public void Write(string key, string section, string value)
-            {
-                WritePrivateProfileString(section, key, value, path);
-            }
-
-            public string Read(string key, string section)
-            {
-                StringBuilder temp = new StringBuilder(255);
-                GetPrivateProfileString(section, key, "", temp, 255, path);
-                return temp.ToString();
-
-            }
-
-            public int ReadInteger(string key, string section, int Default)
-            {
-                string str = Read(key, section);
-                try
-                { return int.Parse(str); }
-                catch
-                {
-                    if (!string.IsNullOrEmpty(str) && str.ToLower() != "default") MessageBox.Show("\"" + str + "\" is not a valid integer for " + key);
-                    return Default;
-                }
-            }
-        }
-
         private void ScreenSaverForm_Load(object sender, EventArgs e)
         {
-            string iniFilePath = Path.Combine(Application.StartupPath, "settings.ini");
+            string iniFilePath = Path.Combine(Application.StartupPath, "PrpBarScrsettings.ini");
 
             if (File.Exists(iniFilePath))
             {
-                FilesINI iniFile = new FilesINI(iniFilePath);
+                Program.FilesINI iniFile = new Program.FilesINI(iniFilePath);
 
                 string background = iniFile.Read("Background", "Settings");
                 if (background.ToLower() == "light") BackColor = Color.White;
@@ -108,8 +67,6 @@ namespace ProgressBarSrc
                 minProgressBarHeight = iniFile.ReadInteger("MinProgressBarHeight", "Settings", minProgressBarHeight);
                 maxMoveSpeed = iniFile.ReadInteger("MaxMoveSpeed", "Settings", maxMoveSpeed);
                 minMoveSpeed = iniFile.ReadInteger("MinMoveSpeed", "Settings", minMoveSpeed);
-                maxProgressValue = iniFile.ReadInteger("MaxProgressValue", "Settings", maxProgressValue);
-                minProgressValue = iniFile.ReadInteger("MinProgressValue", "Settings", maxProgressValue);
                 maxProgressIncrement = iniFile.ReadInteger("MaxProgressIncrement", "Settings", maxProgressIncrement);
                 minProgressIncrement = iniFile.ReadInteger("MinProgressIncrement", "Settings", maxProgressIncrement);
                 ProgressBarCount = iniFile.ReadInteger("ProgressBarCount", "Settings", ProgressBarCount);
@@ -119,26 +76,36 @@ namespace ProgressBarSrc
             {
                 ProgressBar pb = new ProgressBar();
                 pb.Name = i.ToString();
-                pb.Tag = random.Next(minMoveSpeed, maxMoveSpeed);
+                pb.Tag = new int[] { random.Next(minMoveSpeed, maxMoveSpeed + 1), random.Next(0,ProgressBarCount*100+1), 0 };
                 Controls.Add(pb);
                 Timer timer = new Timer();
                 timer.Interval = 10;
                 timer.Tag = pb;
                 timer.Tick += Update;
                 timer.Start();
-                
-                //pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth), random.Next(minProgressBarHeight, maxProgressBarHeight));
-                
-                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height));
+                pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth + 1), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
+                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height + 1));
             }
         }
 
         private void Update(object sender, EventArgs e)
         {
             ProgressBar pb = (sender as Timer).Tag as ProgressBar;
-            int tag = (int)pb.Tag;
-            pb.Location = new Point(pb.Location.X + tag, pb.Location.Y);
-            if (pb.Value != 100) pb.Value += random.Next(minProgressIncrement,maxProgressIncrement);
+            int[] tags = pb.Tag as int[];
+            tags[2]++; pb.Tag = tags;
+            if (tags[1] > tags[2]) return;
+            pb.Location = new Point(pb.Location.X + tags[0], pb.Location.Y);
+            if (pb.Value <= 100 && tags[2] % 100 == 0)
+            {
+                int ProgressIncrement = random.Next(minProgressIncrement, maxProgressIncrement + 1);
+                while (pb.Value + ProgressIncrement > 100) ProgressIncrement--;
+                pb.Value += ProgressIncrement;
+            }
+            if (pb.Location.X > Width + pb.Width)
+            {
+                pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
+                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height));
+            }
         }
     }
 }
