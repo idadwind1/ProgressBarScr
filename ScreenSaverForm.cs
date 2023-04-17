@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Windows.Forms;
 
@@ -76,13 +77,22 @@ namespace ProgressBarSrc
             {
                 ProgressBar pb = new ProgressBar();
                 pb.Name = i.ToString();
-                pb.Tag = new int[] { random.Next(minMoveSpeed, maxMoveSpeed + 1), random.Next(0,ProgressBarCount*100+1), 0 };
+                pb.Tag = new int[] {
+                    random.Next(minMoveSpeed, maxMoveSpeed + 1), //Move speed
+                    random.Next(0,ProgressBarCount*100+1), //Delay time
+                    0, //Current passed time
+                };
                 Controls.Add(pb);
                 Timer timer = new Timer();
                 timer.Interval = 10;
-                timer.Tag = pb;
+                Timer timer2 = new Timer();
+                timer2.Interval = 1000;
+                timer2.Tag = timer;
+                timer2.Tick += UpdateValue;
+                timer.Tag = new object[] { pb, timer2 };
                 timer.Tick += Update;
                 timer.Start();
+                timer2.Start();
                 pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth + 1), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
                 pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height + 1));
             }
@@ -90,21 +100,29 @@ namespace ProgressBarSrc
 
         private void Update(object sender, EventArgs e)
         {
-            ProgressBar pb = (sender as Timer).Tag as ProgressBar;
+            ProgressBar pb = ((sender as Timer).Tag as object[])[0] as ProgressBar;
             int[] tags = pb.Tag as int[];
-            tags[2]++; pb.Tag = tags;
-            if (tags[1] > tags[2]) return;
-            pb.Location = new Point(pb.Location.X + tags[0], pb.Location.Y);
-            if (pb.Value <= 100 && tags[2] % 100 == 0)
+            if (tags[1] <= tags[2]) //Make delay
+            {
+                pb.Location = new Point(pb.Location.X + tags[0], pb.Location.Y);
+                if (pb.Location.X > Width + pb.Width)
+                {
+                    pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
+                    pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height));
+                }
+            }
+            else tags[2]++;
+            pb.Tag = tags;
+        }
+
+        private void UpdateValue(object sender, EventArgs e)
+        {
+            ProgressBar pb = (((sender as Timer).Tag as Timer).Tag as object[])[0] as ProgressBar;
+            if (pb.Value <= 100)
             {
                 int ProgressIncrement = random.Next(minProgressIncrement, maxProgressIncrement + 1);
                 while (pb.Value + ProgressIncrement > 100) ProgressIncrement--;
                 pb.Value += ProgressIncrement;
-            }
-            if (pb.Location.X > Width + pb.Width)
-            {
-                pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
-                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height));
             }
         }
     }
