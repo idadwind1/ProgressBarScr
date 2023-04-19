@@ -11,7 +11,6 @@ namespace ProgressBarSrc
         {
             InitializeComponent();
             Background.SelectedIndex = 0;
-            Background.SelectedIndexChanged += new EventHandler(ValueChanged);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -33,6 +32,15 @@ namespace ProgressBarSrc
             MinIncre.Value = ini.ReadInteger("MinProgressIncrement", "Settings", (int)MinIncre.Value);
             MaxIncre.Value = ini.ReadInteger("MaxProgressIncrement", "Settings", (int)MaxIncre.Value);
             ProBarCnt.Value = ini.ReadInteger("ProgressBarCount", "Settings", (int)ProBarCnt.Value);
+            Background.SelectedIndexChanged += new EventHandler(ValueChanged);
+            MaxHeight.ValueChanged += new EventHandler(ValueChanged);
+            MinHeight.ValueChanged += new EventHandler(ValueChanged);
+            MaxWidth.ValueChanged += new EventHandler(ValueChanged);
+            MinWidth.ValueChanged += new EventHandler(ValueChanged);
+            MaxIncre.ValueChanged += new EventHandler(ValueChanged);
+            MaxSpeed.ValueChanged += new EventHandler(ValueChanged);
+            MinSpeed.ValueChanged += new EventHandler(ValueChanged);
+            ProBarCnt.ValueChanged += new EventHandler(ValueChanged);
             ValueChanged(sender, e);
         }
 

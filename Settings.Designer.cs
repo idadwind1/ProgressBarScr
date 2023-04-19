@@ -103,7 +103,6 @@
             this.TabControl.Size = new System.Drawing.Size(261, 176);
             this.TabControl.TabIndex = 0;
             this.TabControl.Tag = "";
-            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
             this.TabControl.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // tabPage1
@@ -149,7 +148,6 @@
             0,
             0,
             0});
-            this.MaxHeight.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MaxHeight.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label5
@@ -195,7 +193,6 @@
             0,
             0,
             0});
-            this.MinHeight.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MinHeight.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label3
@@ -231,7 +228,6 @@
             0,
             0,
             0});
-            this.MaxWidth.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MaxWidth.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label2
@@ -267,7 +263,6 @@
             0,
             0,
             0});
-            this.MinWidth.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MinWidth.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label1
@@ -312,7 +307,6 @@
             0,
             0,
             0});
-            this.MaxIncre.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MaxIncre.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label11
@@ -333,7 +327,6 @@
             this.MinIncre.Size = new System.Drawing.Size(82, 25);
             this.MinIncre.TabIndex = 6;
             this.MinIncre.Tag = "";
-            this.MinIncre.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MinIncre.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // MaxSpeed
@@ -359,7 +352,6 @@
             0,
             0,
             0});
-            this.MaxSpeed.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MaxSpeed.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label8
@@ -395,7 +387,6 @@
             0,
             0,
             0});
-            this.MinSpeed.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.MinSpeed.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label7
@@ -491,7 +482,6 @@
             0,
             0,
             0});
-            this.ProBarCnt.ValueChanged += new System.EventHandler(this.ValueChanged);
             this.ProBarCnt.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label12
