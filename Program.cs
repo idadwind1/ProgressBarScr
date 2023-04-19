@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProgressBarSrc
@@ -14,11 +13,12 @@ namespace ProgressBarSrc
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ScreenSaverForm());
+            if (args.Length != 0 && args[0].ToUpper() == "/S") { Application.Run(new ScreenSaverForm()); return; }
+            Application.Run(new Settings());
         }
 
 
@@ -45,7 +45,15 @@ namespace ProgressBarSrc
                 StringBuilder temp = new StringBuilder(255);
                 GetPrivateProfileString(section, key, "", temp, 255, path);
                 return temp.ToString();
+            }
 
+
+
+            public string Read(string key, string section, string Default)
+            {
+                StringBuilder temp = new StringBuilder(255);
+                GetPrivateProfileString(section, key, Default, temp, 255, path);
+                return temp.ToString();
             }
 
             public int ReadInteger(string key, string section, int Default)
@@ -55,7 +63,7 @@ namespace ProgressBarSrc
                 { return int.Parse(str); }
                 catch
                 {
-                    if (!string.IsNullOrEmpty(str) && str.ToLower() != "default") MessageBox.Show("\"" + str + "\" is not a valid integer for " + key);
+                    if (!string.IsNullOrEmpty(str) && str.ToLower() != "default") MessageBox.Show("\"" + str + "\" is not a valid integer for " + key, "Error");
                     return Default;
                 }
             }
@@ -66,7 +74,7 @@ namespace ProgressBarSrc
                 { return double.Parse(str); }
                 catch
                 {
-                    if (!string.IsNullOrEmpty(str) && str.ToLower() != "default") MessageBox.Show("\"" + str + "\" is not a valid value for " + key);
+                    if (!string.IsNullOrEmpty(str) && str.ToLower() != "default") MessageBox.Show("\"" + str + "\" is not a valid value for " + key, "Error");
                     return Default;
                 }
             }

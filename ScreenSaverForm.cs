@@ -30,28 +30,27 @@ namespace ProgressBarSrc
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
         {
-            string iniFilePath = Path.Combine(Application.StartupPath, "PrpBarScrsettings.ini");
+            Program.FilesINI iniFile = new Program.FilesINI(Path.Combine(Application.StartupPath, "ProBarScrSettings.ini"));
 
-            if (File.Exists(iniFilePath))
-            {
-                Program.FilesINI iniFile = new Program.FilesINI(iniFilePath);
+            string background = iniFile.Read("Background", "Settings");
+            if (background.ToLower() == "light") { BackColor = Color.White; label1.ForeColor = Color.Black; }
+            else if (background.ToLower() == "dark" || background.ToLower() == "default") { BackColor = Color.Black; label1.ForeColor = Color.White; }
+            else if (!string.IsNullOrEmpty(background)) MessageBox.Show(
+                "\"" + background + "\" is not a valid value for Background", "Error");
 
-                string background = iniFile.Read("Background", "Settings");
-                if (background.ToLower() == "light") { BackColor = Color.White; label1.ForeColor = Color.Black; }
-                else if (background.ToLower() == "dark") { BackColor = Color.Black; label1.ForeColor = Color.White; }
-                else if (!string.IsNullOrEmpty(background)) MessageBox.Show(
-                    "\"" + background + "\" is not a valid value for Background");
-
-                maxProgressBarWidth = iniFile.ReadInteger("MaxProgressBarWidth", "Settings", maxProgressBarWidth);
-                minProgressBarWidth = iniFile.ReadInteger("MinProgressBarWidth", "Settings", minProgressBarWidth);
-                maxProgressBarHeight = iniFile.ReadInteger("MaxProgressBarHeight", "Settings", maxProgressBarHeight);
-                minProgressBarHeight = iniFile.ReadInteger("MinProgressBarHeight", "Settings", minProgressBarHeight);
-                maxMoveSpeed = iniFile.ReadInteger("MaxMoveSpeed", "Settings", maxMoveSpeed);
-                minMoveSpeed = iniFile.ReadInteger("MinMoveSpeed", "Settings", minMoveSpeed);
-                maxProgressIncrement = iniFile.ReadInteger("MaxProgressIncrement", "Settings", maxProgressIncrement);
-                minProgressIncrement = iniFile.ReadInteger("MinProgressIncrement", "Settings", maxProgressIncrement);
-                ProgressBarCount = iniFile.ReadInteger("ProgressBarCount", "Settings", ProgressBarCount);
-            }
+            maxProgressBarWidth = iniFile.ReadInteger("MaxProgressBarWidth", "Settings", maxProgressBarWidth);
+            minProgressBarWidth = iniFile.ReadInteger("MinProgressBarWidth", "Settings", minProgressBarWidth);
+            maxProgressBarHeight = iniFile.ReadInteger("MaxProgressBarHeight", "Settings", maxProgressBarHeight);
+            minProgressBarHeight = iniFile.ReadInteger("MinProgressBarHeight", "Settings", minProgressBarHeight);
+            maxMoveSpeed = iniFile.ReadInteger("MaxMoveSpeed", "Settings", maxMoveSpeed);
+            minMoveSpeed = iniFile.ReadInteger("MinMoveSpeed", "Settings", minMoveSpeed);
+            maxProgressIncrement = iniFile.ReadInteger("MaxProgressIncrement", "Settings", maxProgressIncrement);
+            minProgressIncrement = iniFile.ReadInteger("MinProgressIncrement", "Settings", maxProgressIncrement);
+            ProgressBarCount = iniFile.ReadInteger("ProgressBarCount", "Settings", ProgressBarCount);
+            if (minProgressBarHeight > maxProgressBarHeight)
+                MessageBox.Show("MinProgressBarHeight value can't be bigger than MaxProgressBarHeight value", "Error");
+            if (minProgressBarWidth > maxProgressBarWidth)
+                MessageBox.Show("MinProgressBarWidth value can't be bigger than MaxProgressBarWidth value", "Error");
             //Cursor.Hide();
             for (int i = 0; i < ProgressBarCount; i++)
             {
@@ -59,7 +58,7 @@ namespace ProgressBarSrc
                 pb.Name = i.ToString();
                 pb.Tag = random.Next(minMoveSpeed, maxMoveSpeed + 1);
                 pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth + 1), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
-                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height + 1));
+                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height + 1 <=0 ? 0 : Height - pb.Height + 1));
                 pb.MouseEnter += MouseHoverOnProgressBar;
                 pb.MouseLeave += MouseLeaveProgressBar;
                 Controls.Add(pb);
@@ -87,7 +86,7 @@ namespace ProgressBarSrc
             if (pb.Location.X > Width + pb.Width)
             {
                 pb.Size = new Size(random.Next(minProgressBarWidth, maxProgressBarWidth), random.Next(minProgressBarHeight, maxProgressBarHeight + 1));
-                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height));
+                pb.Location = new Point(-pb.Width, random.Next(0, Height - pb.Height + 1 <= 0 ? 0 : Height - pb.Height + 1));
                 pb.Value = 0;
             }
         }
