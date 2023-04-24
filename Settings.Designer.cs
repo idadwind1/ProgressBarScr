@@ -54,23 +54,16 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.ProBarCnt = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label20 = new System.Windows.Forms.Label();
+            this.Start = new System.Windows.Forms.Button();
+            this.Reset = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.ApplyChanges = new System.Windows.Forms.Button();
             this.Discard = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.label13 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.Reset = new System.Windows.Forms.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.Start = new System.Windows.Forms.Button();
-            this.label20 = new System.Windows.Forms.Label();
             this.TabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MaxHeight)).BeginInit();
@@ -85,7 +78,6 @@
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProBarCnt)).BeginInit();
-            this.panel1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,6 +95,7 @@
             this.TabControl.Size = new System.Drawing.Size(261, 176);
             this.TabControl.TabIndex = 0;
             this.TabControl.Tag = "";
+            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
             this.TabControl.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // tabPage1
@@ -494,6 +487,49 @@
             this.label12.TabIndex = 5;
             this.label12.Text = "Progress bar count: ";
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.label20);
+            this.tabPage5.Controls.Add(this.Start);
+            this.tabPage5.Controls.Add(this.Reset);
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(253, 147);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "More";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.Location = new System.Drawing.Point(9, 83);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(238, 42);
+            this.label20.TabIndex = 10;
+            this.label20.Text = "Press any key or click mouse to exit demo view";
+            // 
+            // Start
+            // 
+            this.Start.Location = new System.Drawing.Point(6, 46);
+            this.Start.Name = "Start";
+            this.Start.Size = new System.Drawing.Size(241, 34);
+            this.Start.TabIndex = 9;
+            this.Start.Text = "Start demo view";
+            this.Start.UseVisualStyleBackColor = true;
+            this.Start.Click += new System.EventHandler(this.Start_Click);
+            this.Start.Enter += new System.EventHandler(this.ControlEnter);
+            // 
+            // Reset
+            // 
+            this.Reset.Location = new System.Drawing.Point(6, 6);
+            this.Reset.Name = "Reset";
+            this.Reset.Size = new System.Drawing.Size(241, 34);
+            this.Reset.TabIndex = 8;
+            this.Reset.Text = "Reset to default";
+            this.Reset.UseVisualStyleBackColor = true;
+            this.Reset.Click += new System.EventHandler(this.Reset_Click);
+            this.Reset.Enter += new System.EventHandler(this.ControlEnter);
+            // 
             // label6
             // 
             this.label6.Location = new System.Drawing.Point(281, 15);
@@ -514,7 +550,7 @@
             this.ApplyChanges.Size = new System.Drawing.Size(177, 28);
             this.ApplyChanges.TabIndex = 2;
             this.ApplyChanges.Tag = "";
-            this.ApplyChanges.Text = "Apply changes";
+            this.ApplyChanges.Text = "Confirm";
             this.ApplyChanges.UseVisualStyleBackColor = true;
             this.ApplyChanges.Click += new System.EventHandler(this.ApplyChanges_Click);
             this.ApplyChanges.Enter += new System.EventHandler(this.ControlEnter);
@@ -532,81 +568,15 @@
             this.Discard.Click += new System.EventHandler(this.button2_Click);
             this.Discard.Enter += new System.EventHandler(this.ControlEnter);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(3, 36);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(168, 23);
-            this.progressBar1.TabIndex = 4;
-            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label18);
-            this.panel1.Controls.Add(this.label17);
-            this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.label14);
-            this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Controls.Add(this.progressBar2);
             this.panel1.Location = new System.Drawing.Point(424, 31);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(176, 270);
+            this.panel1.Size = new System.Drawing.Size(245, 270);
             this.panel1.TabIndex = 5;
             this.panel1.Tag = "Demo";
             this.panel1.Enter += new System.EventHandler(this.ControlEnter);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(-1, 144);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(183, 15);
-            this.label18.TabIndex = 9;
-            this.label18.Text = "Maximum Increment(10%)";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(-1, 62);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(175, 15);
-            this.label17.TabIndex = 8;
-            this.label17.Text = "Minimum Increment(0%)";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(3, 100);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(175, 15);
-            this.label15.TabIndex = 6;
-            this.label15.Text = "Maximum Progress Bar:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(4, 18);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(175, 15);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "Minimum Progress Bar:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(0, 18);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(167, 15);
-            this.label14.TabIndex = 5;
-            this.label14.Text = "Minimum Progress Bar";
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Location = new System.Drawing.Point(3, 118);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(168, 23);
-            this.progressBar2.TabIndex = 7;
             // 
             // label13
             // 
@@ -625,54 +595,11 @@
             this.label19.TabIndex = 7;
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Reset
-            // 
-            this.Reset.Location = new System.Drawing.Point(6, 6);
-            this.Reset.Name = "Reset";
-            this.Reset.Size = new System.Drawing.Size(241, 34);
-            this.Reset.TabIndex = 8;
-            this.Reset.Text = "Reset to default";
-            this.Reset.UseVisualStyleBackColor = true;
-            this.Reset.Click += new System.EventHandler(this.Reset_Click);
-            this.Reset.Enter += new System.EventHandler(this.ControlEnter);
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.label20);
-            this.tabPage5.Controls.Add(this.Start);
-            this.tabPage5.Controls.Add(this.Reset);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(253, 147);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "More";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // Start
-            // 
-            this.Start.Location = new System.Drawing.Point(6, 46);
-            this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(241, 34);
-            this.Start.TabIndex = 9;
-            this.Start.Text = "Start demo view";
-            this.Start.UseVisualStyleBackColor = true;
-            this.Start.Click += new System.EventHandler(this.Start_Click);
-            this.Start.Enter += new System.EventHandler(this.ControlEnter);
-            // 
-            // label20
-            // 
-            this.label20.Location = new System.Drawing.Point(9, 83);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(238, 42);
-            this.label20.TabIndex = 10;
-            this.label20.Text = "Press any key or click mouse to exit demo view";
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 310);
+            this.ClientSize = new System.Drawing.Size(681, 310);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.panel1);
@@ -680,6 +607,7 @@
             this.Controls.Add(this.ApplyChanges);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.TabControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Settings";
@@ -706,8 +634,6 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProBarCnt)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -745,15 +671,8 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.NumericUpDown ProBarCnt;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button Reset;
         private System.Windows.Forms.TabPage tabPage5;

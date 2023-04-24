@@ -1,12 +1,34 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ProgressBarSrc
 {
     public partial class ScreenSaverForm : Form
     {
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+        struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+
+            public Rectangle ToRectangle()
+            {
+                return new Rectangle(Left, Top, Right - Left, Bottom - Top);
+            }
+        }
+
         private int maxProgressBarWidth = 300;
         private int minProgressBarWidth = 50;
         private int maxProgressBarHeight = 40;
@@ -26,10 +48,37 @@ namespace ProgressBarSrc
             Bounds = Screen.PrimaryScreen.Bounds;
             BackColor = Color.Black;
             label1.ForeColor = Color.White;
+            IsPreviewMode = false;
         }
+
+        private IntPtr previewHandle;
+
+        public bool IsPreviewMode;
+
+        public ScreenSaverForm(IntPtr handle)
+        {
+            InitializeComponent();
+            FormBorderStyle = FormBorderStyle.None;
+            Bounds = Screen.PrimaryScreen.Bounds;
+            BackColor = Color.Black;
+            label1.ForeColor = Color.White;
+            previewHandle = handle;
+            IsPreviewMode = true;
+        }
+
+        double x;
+        double y;
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
         {
+            if (IsPreviewMode)
+            {
+                SetParent(Handle, previewHandle);
+                GetWindowRect(previewHandle, out RECT rect);
+                Size = rect.ToRectangle().Size;
+                //GetClientRect(previewHandle, out RECT rect);
+                //Bounds = rect.ToRectangle();
+            }
             Program.FilesINI iniFile = new Program.FilesINI(Path.Combine(Application.StartupPath, "ProBarScrSettings.ini"));
 
             string background = iniFile.Read("Background", "Settings");
@@ -67,7 +116,7 @@ namespace ProgressBarSrc
                 Timer timer3 = new Timer();
                 timer.Interval = 10;
                 timer2.Interval = 1000;
-                timer3.Interval = random.Next(0, ProgressBarCount * 100 + 1);
+                timer3.Interval = random.Next(1, ProgressBarCount * 100 + 1);
                 timer.Tick += Update;
                 timer2.Tick += UpdateValue;
                 timer3.Tick += MakeDelay;
@@ -130,12 +179,12 @@ namespace ProgressBarSrc
 
         private void ScreenSaverForm_UserActed(object sender, MouseEventArgs e)
         {
-            Close();
+            if (!IsPreviewMode) Close();
         }
 
         private void ScreenSaverForm_UserActed(object sender, KeyPressEventArgs e)
         {
-            Close();
+            if (!IsPreviewMode) Close();
         }
     }
 }

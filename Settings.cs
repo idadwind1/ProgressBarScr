@@ -11,7 +11,11 @@ namespace ProgressBarSrc
         {
             InitializeComponent();
             Background.SelectedIndex = 0;
+            demoProcess.StartInfo.FileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            demoProcess.StartInfo.Arguments = "/P " + panel1.Handle.ToInt32().ToString();
         }
+
+        System.Diagnostics.Process demoProcess = new System.Diagnostics.Process();
 
         private void button2_Click(object sender, EventArgs e)
         { Close(); }
@@ -19,7 +23,6 @@ namespace ProgressBarSrc
         private void Settings_Load(object sender, EventArgs e)
         {
             panel1.BackColor = Color.Black;
-            Program.FilesINI ini = new Program.FilesINI(Path.Combine(Application.StartupPath, "ProBarScrSettings.ini"));
             string background = ini.Read("Background", "Settings");
             if (background.ToLower() == "light") Background.SelectedIndex = 1;
             else if (background.ToLower() == "dark") Background.SelectedIndex = 0;
@@ -41,6 +44,7 @@ namespace ProgressBarSrc
             MaxSpeed.ValueChanged += new EventHandler(ValueChanged);
             MinSpeed.ValueChanged += new EventHandler(ValueChanged);
             ProBarCnt.ValueChanged += new EventHandler(ValueChanged);
+            demoProcess.Start();
             ValueChanged(sender, e);
         }
 
@@ -51,14 +55,6 @@ namespace ProgressBarSrc
                 ApplyChanges.Enabled = true;
                 Discard.Text = "Discard";
             }
-            progressBar1.Size = new Size((int)MinWidth.Value, (int)MinHeight.Value);
-            progressBar2.Size = new Size((int)MaxWidth.Value, (int)MaxHeight.Value);
-            progressBar1.Value = (int)MinIncre.Value;
-            progressBar2.Value = (int)MaxIncre.Value;
-            panel1.BackColor = Background.Text == "Dark" ? Color.Black : Color.White;
-            label17.Text = string.Format("Minimum Increment({0}%)", MinIncre.Value);
-            label18.Text = string.Format("Maximum Increment({0}%)", MaxIncre.Value);
-            label18.ForeColor = label17.ForeColor = label15.ForeColor = label16.ForeColor = Background.Text == "Dark" ? Color.White : Color.Black;
             switch (TabControl.SelectedIndex)
             {
                 case 0:
@@ -146,9 +142,11 @@ namespace ProgressBarSrc
                 MessageBoxDefaultButton.Button2) == DialogResult.No;
         }
 
+        Program.FilesINI ini = new Program.FilesINI(Path.Combine(Application.StartupPath, "ProBarScrSettings.ini"));
         private void ApplyChanges_Click(object sender, EventArgs e)
         {
-            Program.FilesINI ini = new Program.FilesINI(Path.Combine(Application.StartupPath, "ProBarScrSettings.ini"));
+            if (!demoProcess.HasExited) demoProcess.Kill();
+            demoProcess.Start();
             ini.Write("MinProgressBarWidth", "Settings", MinWidth.Value.ToString());
             ini.Write("MaxProgressBarWidth", "Settings", MaxWidth.Value.ToString());
             ini.Write("MinProgressBarHeight", "Settings", MinHeight.Value.ToString());

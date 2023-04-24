@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -9,6 +8,9 @@ namespace ProgressBarSrc
 {
     internal static class Program
     {
+
+        [DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(IntPtr handle);
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -17,7 +19,28 @@ namespace ProgressBarSrc
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (args.Length != 0 && args[0].ToUpper() == "/S") { Application.Run(new ScreenSaverForm()); return; }
+            /*foreach (var item in args)
+            {
+                MessageBox.Show(item);
+            }*/
+            if (args.Length != 0)
+            {
+                switch (args[0].ToUpper())
+                {
+                    case "-S":
+                    case "/S":
+                        Application.Run(new ScreenSaverForm());
+                        return;
+                    case "-P":
+                    case "/P":
+                        if (args.Length < 2) return;
+                        if (!int.TryParse(args[1], out int result)) return;
+                        IntPtr handle = new IntPtr(result);
+                        Application.Run(new ScreenSaverForm(handle));
+                        return;
+                }
+                if (!args[0].ToUpper().StartsWith("/C")) return;
+            }
             Application.Run(new Settings());
         }
 
