@@ -54,6 +54,7 @@ namespace ProgressBarSrc
             {
                 ApplyChanges.Enabled = true;
                 Discard.Text = "Discard";
+                label13.Text = "Demo (Click confirm to update):";
             }
             switch (TabControl.SelectedIndex)
             {
@@ -124,7 +125,7 @@ namespace ProgressBarSrc
                     label19.Text = "Discard all changes and exit";
                     break;
                 case "Reset":
-                    label19.Text = "Reset all settings tpo default";
+                    label19.Text = "Reset all settings to default";
                     break;
                 case "Start":
                     label19.Text = string.Format("Start a demo view of screen saver, command line: \"{0}\"", System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName + " /S");
@@ -158,6 +159,7 @@ namespace ProgressBarSrc
             ini.Write("ProgressBarCount", "Settings", ProBarCnt.Value.ToString());
             ini.Write("Background", "Settings", Background.Text);
             ApplyChanges.Enabled = false;
+            label13.Text = "Demo:";
             Discard.Text = "Cancel";
         }
 

@@ -96,7 +96,7 @@
             this.TabControl.TabIndex = 0;
             this.TabControl.Tag = "";
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
-            this.TabControl.Enter += new System.EventHandler(this.ControlEnter);
+            this.TabControl.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // tabPage1
             // 
@@ -141,6 +141,7 @@
             0,
             0,
             0});
+            this.MaxHeight.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MaxHeight.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label5
@@ -186,6 +187,7 @@
             0,
             0,
             0});
+            this.MinHeight.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MinHeight.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label3
@@ -221,6 +223,7 @@
             0,
             0,
             0});
+            this.MaxWidth.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MaxWidth.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label2
@@ -256,6 +259,7 @@
             0,
             0,
             0});
+            this.MinWidth.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MinWidth.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label1
@@ -300,6 +304,7 @@
             0,
             0,
             0});
+            this.MaxIncre.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MaxIncre.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label11
@@ -320,6 +325,7 @@
             this.MinIncre.Size = new System.Drawing.Size(82, 25);
             this.MinIncre.TabIndex = 6;
             this.MinIncre.Tag = "";
+            this.MinIncre.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MinIncre.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // MaxSpeed
@@ -345,6 +351,7 @@
             0,
             0,
             0});
+            this.MaxSpeed.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MaxSpeed.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label8
@@ -380,6 +387,7 @@
             0,
             0,
             0});
+            this.MinSpeed.MouseHover += new System.EventHandler(this.ControlEnter);
             this.MinSpeed.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label7
@@ -429,6 +437,7 @@
             this.Background.TabIndex = 0;
             this.Background.Tag = "";
             this.Background.Enter += new System.EventHandler(this.ControlEnter);
+            this.Background.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // label9
             // 
@@ -475,6 +484,7 @@
             0,
             0,
             0});
+            this.ProBarCnt.MouseHover += new System.EventHandler(this.ControlEnter);
             this.ProBarCnt.Enter += new System.EventHandler(this.ControlEnter);
             // 
             // label12
@@ -518,6 +528,7 @@
             this.Start.UseVisualStyleBackColor = true;
             this.Start.Click += new System.EventHandler(this.Start_Click);
             this.Start.Enter += new System.EventHandler(this.ControlEnter);
+            this.Start.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // Reset
             // 
@@ -529,6 +540,7 @@
             this.Reset.UseVisualStyleBackColor = true;
             this.Reset.Click += new System.EventHandler(this.Reset_Click);
             this.Reset.Enter += new System.EventHandler(this.ControlEnter);
+            this.Reset.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // label6
             // 
@@ -539,7 +551,7 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "The size of the progress bar will be minimum (50,10) and maximum (300,40). Your s" +
     "creen resolution is (0,0)\r\n";
-            this.label6.Enter += new System.EventHandler(this.ControlEnter);
+            this.label6.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // ApplyChanges
             // 
@@ -550,10 +562,11 @@
             this.ApplyChanges.Size = new System.Drawing.Size(177, 28);
             this.ApplyChanges.TabIndex = 2;
             this.ApplyChanges.Tag = "";
-            this.ApplyChanges.Text = "Confirm";
+            this.ApplyChanges.Text = "Confirm and apply";
             this.ApplyChanges.UseVisualStyleBackColor = true;
             this.ApplyChanges.Click += new System.EventHandler(this.ApplyChanges_Click);
             this.ApplyChanges.Enter += new System.EventHandler(this.ControlEnter);
+            this.ApplyChanges.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // Discard
             // 
@@ -567,6 +580,7 @@
             this.Discard.UseVisualStyleBackColor = true;
             this.Discard.Click += new System.EventHandler(this.button2_Click);
             this.Discard.Enter += new System.EventHandler(this.ControlEnter);
+            this.Discard.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // panel1
             // 
@@ -576,7 +590,7 @@
             this.panel1.Size = new System.Drawing.Size(245, 270);
             this.panel1.TabIndex = 5;
             this.panel1.Tag = "Demo";
-            this.panel1.Enter += new System.EventHandler(this.ControlEnter);
+            this.panel1.MouseHover += new System.EventHandler(this.ControlEnter);
             // 
             // label13
             // 
